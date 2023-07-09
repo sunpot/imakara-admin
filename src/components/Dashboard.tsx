@@ -14,6 +14,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
+import {Container, Grid} from "@mui/material";
+import Streamer from "./Streamer.tsx";
 
 // function Copyright(props: any) {
 //     return (
@@ -79,6 +81,18 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 const defaultTheme = createTheme();
+
+const liverList = () => {
+    const ids = [1,2,3,4,5,6,7]
+    console.log("liver list called");
+    return ids.map(id => {
+        return (
+            <Grid key={id} item xs={12} sm={6} md={4}>
+                <Streamer id={id} />
+            </Grid>
+        )
+    });
+}
 
 export default function Dashboard() {
     const [open, setOpen] = React.useState(true);
@@ -154,8 +168,14 @@ export default function Dashboard() {
                         flexGrow: 1,
                         height: '100vh',
                         overflow: 'auto',
+                        pt: 8,
                     }}
                 >
+                    <Container maxWidth="lg" sx={{ mt: 4, mb: 4}}>
+                        <Grid container spacing={3}>
+                            {liverList()}
+                        </Grid>
+                    </Container>
                 </Box>
             </Box>
         </ThemeProvider>
