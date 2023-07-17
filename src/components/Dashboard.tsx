@@ -177,6 +177,9 @@ export default function Dashboard() {
                             {liverList()}
                         </Grid>
                     </Container>
+                    <Fab sx={{position: 'absolute', bottom: 32, right: 32}}>
+                        <AddIcon />
+                    </Fab>
                 </Box>
             </Box>
         </ThemeProvider>
