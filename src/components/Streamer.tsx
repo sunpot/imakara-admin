@@ -1,21 +1,16 @@
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
 import Avatar from '@mui/material/Avatar';
-import IconButton, { IconButtonProps } from '@mui/material/IconButton';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import IconButton from '@mui/material/IconButton';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import {StreamerDetail, StreamerLink, Tag} from '../models/streamerDetail.ts';
 import StreamerLinkList from "./StreamerLinkList.tsx";
+import Divider from "@mui/material/Divider";
+import {Chip} from "@mui/material";
+import Box from "@mui/material/Box";
 
-interface ExpandMoreProps extends IconButtonProps {
-    expand: boolean;
-}
 
 class StreamerLinkImpl implements StreamerLink {
     constructor(url: string) {
@@ -41,18 +36,18 @@ class StreamerDetailImpl implements StreamerDetail {
         this.otherLinks = [];
         this.tags = [];
     }
+
+    addTag(value: string): void {
+        this.tags.push(new TagImpl(value));
+    }
 }
 
-const ExpandMore = styled((props: ExpandMoreProps) => {
-    const { expand, ...other } = props;
-    return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-    transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-        duration: theme.transitions.duration.shortest,
-    }),
-}));
+class TagImpl implements Tag {
+    value: string;
+    constructor(value: string) {
+        this.value = value;
+    }
+}
 
 type TmpStreamer = {
     id: number
@@ -119,25 +114,23 @@ const getLiverDetail = (id: number) => {
     const name = a.name;
     const thumbnail = a.thumbnail;
     const channel_url = a.channel_url;
-    return new StreamerDetailImpl(name, thumbnail, channel_url);
+
+    const streamerDetail = new StreamerDetailImpl(name, thumbnail, channel_url);
+    a.tags.map(_ => {streamerDetail.addTag(_)});
+    return streamerDetail;
 }
 
 export default function Streamer(props: { id: number; }) {
-    const [expanded, setExpanded] = React.useState(false);
     const detail = getLiverDetail(props.id);
-
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
-    };
 
     return (
         <Card sx={{
-            p: 2,
+            p: 1,
             display: 'flex',
             flexDirection: 'column',
-            height: 240,
         }}>
             <CardHeader
+                sx={{p: 1}}
                 avatar={
                     <Avatar alt={detail.displayName} src={detail.thumbnail}/>
                 }
@@ -149,31 +142,17 @@ export default function Streamer(props: { id: number; }) {
                 title={detail.displayName}
                 subheader="September 14, 2016"
             />
-            {/*<CardMedia*/}
-            {/*    component="img"*/}
-            {/*    height="194"*/}
-            {/*    image="/static/images/cards/paella.jpg"*/}
-            {/*    alt="Paella dish"*/}
-            {/*/>*/}
-            <CardContent>
+            <CardContent sx={{p: 1}}>
                 <StreamerLinkList primary={detail.primaryLink} other={detail.otherLinks} />
+                <Divider />
+                <Box>
+                    {detail.tags.map(_ => {
+                        return (
+                            <Chip sx={{mt: 1, mr: 1}} label={_.value} />
+                        )
+                    })}
+                </Box>
             </CardContent>
-            <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites">
-                    <FavoriteIcon />
-                </IconButton>
-                <IconButton aria-label="share">
-                    <ShareIcon />
-                </IconButton>
-                <ExpandMore
-                    expand={expanded}
-                    onClick={handleExpandClick}
-                    aria-expanded={expanded}
-                    aria-label="show more"
-                >
-                    <ExpandMoreIcon />
-                </ExpandMore>
-            </CardActions>
         </Card>
     );
 }
