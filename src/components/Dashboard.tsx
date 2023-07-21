@@ -11,12 +11,12 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
 import MenuIcon from '@mui/icons-material/Menu';
-import AddIcon from '@mui/icons-material/Add';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
-import {Container, Fab, Grid} from "@mui/material";
-import Streamer from "./Streamer.tsx";
+import {Container, Grid} from "@mui/material";
+import Streamer from "./Streamer";
+import AddEditFrame from "./AddEditFrame";
 
 // function Copyright(props: any) {
 //     return (
@@ -177,9 +177,7 @@ export default function Dashboard() {
                             {liverList()}
                         </Grid>
                     </Container>
-                    <Fab sx={{position: 'absolute', bottom: 32, right: 32}}>
-                        <AddIcon />
-                    </Fab>
+                    <AddEditFrame />
                 </Box>
             </Box>
         </ThemeProvider>

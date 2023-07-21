@@ -1,53 +1,19 @@
-import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import {StreamerDetail, StreamerLink, Tag} from '../models/streamerDetail.ts';
-import StreamerLinkList from "./StreamerLinkList.tsx";
+import {StreamerDetailImpl, Tag} from '../models/streamerDetail';
+import StreamerLinkList from "./StreamerLinkList";
 import Divider from "@mui/material/Divider";
 import {Chip} from "@mui/material";
 import Box from "@mui/material/Box";
 
 
-class StreamerLinkImpl implements StreamerLink {
-    constructor(url: string) {
-        this.url = url;
-        this.thumbnail = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/YouTube_full-color_icon_%282017%29.svg/320px-YouTube_full-color_icon_%282017%29.svg.png";
-    }
 
-    thumbnail: string;
-    url: string;
-}
 
-class StreamerDetailImpl implements StreamerDetail {
-    displayName: string;
-    thumbnail: string;
-    otherLinks: Array<StreamerLink>;
-    primaryLink: StreamerLink;
-    tags: Array<Tag>;
 
-    constructor(displayName: string, thumbnail: string, primaryLink: string) {
-        this.displayName = displayName;
-        this.thumbnail = thumbnail;
-        this.primaryLink = new StreamerLinkImpl(primaryLink);
-        this.otherLinks = [];
-        this.tags = [];
-    }
-
-    addTag(value: string): void {
-        this.tags.push(new TagImpl(value));
-    }
-}
-
-class TagImpl implements Tag {
-    value: string;
-    constructor(value: string) {
-        this.value = value;
-    }
-}
 
 type TmpStreamer = {
     id: number
@@ -111,17 +77,21 @@ const mockStreamers: TmpStreamer[] = [
 
 const getLiverDetail = (id: number) => {
     const a = mockStreamers.find(_ => _.id === id);
-    const name = a.name;
-    const thumbnail = a.thumbnail;
-    const channel_url = a.channel_url;
+    if (a !== undefined) {
+        const name = a.name;
+        const thumbnail = a.thumbnail;
+        const channel_url = a.channel_url;
 
-    const streamerDetail = new StreamerDetailImpl(name, thumbnail, channel_url);
-    a.tags.map(_ => {streamerDetail.addTag(_)});
-    return streamerDetail;
+        const streamerDetail = new StreamerDetailImpl(name, thumbnail, channel_url);
+        a.tags.map(_ => {streamerDetail.addTag(_)});
+        return streamerDetail;
+    }
 }
 
 export default function Streamer(props: { id: number; }) {
     const detail = getLiverDetail(props.id);
+
+    if (detail === undefined) return (<></>);
 
     return (
         <Card sx={{
@@ -146,7 +116,7 @@ export default function Streamer(props: { id: number; }) {
                 <StreamerLinkList primary={detail.primaryLink} other={detail.otherLinks} />
                 <Divider />
                 <Box>
-                    {detail.tags.map(_ => {
+                    {detail.tags.map((_: Tag) => {
                         return (
                             <Chip sx={{mt: 1, mr: 1}} label={_.value} />
                         )
