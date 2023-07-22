@@ -1,0 +1,35 @@
+syntax = "proto3";
+package imakara;
+
+service Program {
+  rpc List (ListProgramRequest) returns (ListProgramResponse);
+  rpc GetDetail (GetDetailRequest) returns (GetDetailResponse);
+}
+
+message GetDetailRequest {
+  string id = 1;
+}
+
+message GetDetailResponse {
+  string id = 1;
+  string title = 2;
+  string description = 3;
+  string thumbnail_url = 4;
+  string avatar_url = 5;
+  string person_id = 6;
+  string stream_url = 7;
+}
+
+message ListProgramRequest {
+  int32 days = 1;
+  int32 tz_diff = 2;
+}
+
+message ListProgramResponse {
+  repeated MProgramIndex program_indexes = 1;
+}
+
+message MProgramIndex {
+  string id = 1;
+  uint64 scheduled_utime = 2;
+}
