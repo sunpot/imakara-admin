@@ -9,18 +9,20 @@ import DialogTitle from '@mui/material/DialogTitle';
 import {Autocomplete, Fab, Link,} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import Avatar from "@mui/material/Avatar";
-import {StreamerDetail, StreamerDetailImpl} from "../models/streamerDetail";
+import {StreamerDetailImpl} from "../models/streamerDetail";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
 import Divider from "@mui/material/Divider";
-
+import {useRecoilState} from 'recoil';
+import {streamerListState} from "../state/streamers";
 
 export default function AddEditFrame() {
     const [open, setOpen] = React.useState(false);
     const [invalidUrl, setInvalidUrl] = React.useState({state: false, message: ""});
     const [url, setUrl] = React.useState("");
-    const [data, setData] = React.useState<StreamerDetail|undefined>(undefined);
+    const [data, setData] = React.useState<StreamerDetailImpl|undefined>(undefined);
+    const [list, setList] = useRecoilState(streamerListState)
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -40,11 +42,17 @@ export default function AddEditFrame() {
     const handleClose = () => {
         setOpen(false);
         setUrl("");
+        if (data !== undefined) {
+            setList([...list, data]);
+        }
         setData(undefined);
     };
 
     const handleSubscribe = (url: string) => {
-        if (url.startsWith("https://")) {
+        if (list.find(_ => _.primaryLink.url === url)) {
+            setInvalidUrl({state: true, message: "Already exists."});
+        }
+        else if (url.startsWith("https://")) {
             setInvalidUrl({state: false, message: ""});
             alert(`Channel ${url} will be added.`);
             getNewStreamerTmp();
