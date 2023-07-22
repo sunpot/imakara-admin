@@ -29,6 +29,7 @@ export default function AddEditFrame() {
 
     const getNewStreamerTmp = () => {
         const tmp = new StreamerDetailImpl(
+            100,
             "夜見れな",
             "https://yt3.googleusercontent.com/IIncCRzntW4-2phBOSa2hhvpq3CSbav32m1mDiC1ckYBDi9pD3IeBSft0su3R68qZuHdOt0z7g=s176-c-k-c0x00ffffff-no-rj",
             "https://www.youtube.com/@YorumiRena",
