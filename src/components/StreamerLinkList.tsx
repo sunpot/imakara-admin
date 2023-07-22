@@ -3,7 +3,7 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import Divider from '@mui/material/Divider';
-import {StreamerLink} from "../models/streamerDetail.ts";
+import {StreamerLink} from "../models/streamerDetail";
 import {Link, ListItemAvatar} from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 

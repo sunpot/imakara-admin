@@ -4,83 +4,15 @@ import CardContent from '@mui/material/CardContent';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import {StreamerDetailImpl, Tag} from '../models/streamerDetail';
+import {StreamerDetail, Tag} from '../models/streamerDetail';
 import StreamerLinkList from "./StreamerLinkList";
 import Divider from "@mui/material/Divider";
 import {Chip} from "@mui/material";
 import Box from "@mui/material/Box";
-import {atom, useRecoilValue, selector} from 'recoil';
 
 
-const streamerListState = atom({
-    key: "streamerList",
-    default: [
-        new StreamerDetailImpl(
-            1,
-            "える",
-            "https://images.microcms-assets.io/assets/5694fd90407444338a64d654e407cc0e/d42ede0830fd40cab274bc483cc5d0ad/liver-face_Elu.png.webp?w=200&fm=webp",
-            "https://www.youtube.com/channel/UCYKP16oMX9KKPbrNgo_Kgag",
-            ["1期生", "かえる"],
-        ),
-        new StreamerDetailImpl(
-            2,
-            "静凛",
-            "https://images.microcms-assets.io/assets/5694fd90407444338a64d654e407cc0e/3e388baf964c4c4a84b27cd709f86ce4/liver-face_Rin_Shizuka.png.webp?w=200&fm=webp",
-            "https://www.youtube.com/channel/UC6oDys1BGgBsIC3WhG1BovQ",
-            ["1期生"],
-        ),
-        new StreamerDetailImpl(
-            3,
-            "渋谷ハジメ",
-            "https://images.microcms-assets.io/assets/5694fd90407444338a64d654e407cc0e/48d793b718984df8b9f81ade7f0b8a5a/liver-face_Hajime_Shibuya.png.webp?w=200&fm=webp",
-            "https://www.youtube.com/channel/UCeK9HFcRZoTrvqcUCtccMoQ",
-            ["1期生"],
-        ),
-        new StreamerDetailImpl(
-            4,
-            "鈴谷アキ",
-            "https://images.microcms-assets.io/assets/5694fd90407444338a64d654e407cc0e/0cb04e2488474c329bb586a3831a8885/liver-face_Aki_Suzuya.png.webp?w=200&fm=webp",
-            "https://www.youtube.com/channel/UCpnvhOIJ6BN-vPkYU9ls-Eg",
-            ["1期生"],
-        ),
-        new StreamerDetailImpl(
-            5,
-            "月ノ美兎",
-            "https://cdn.wikiwiki.jp/to/w/nijisanji/%E6%9C%88%E3%83%8E%E7%BE%8E%E5%85%8E/::ref/face_orig.png.webp?rev=f851cb1ddd0a8d624204895dd42cc444&t=20220809052103",
-            "https://www.youtube.com/channel/UCD-miitqNY3nyukJ4Fnf4_A",
-            ["1期生"],
-        ),
-        new StreamerDetailImpl(
-            6,
-            "樋口楓",
-            "https://images.microcms-assets.io/assets/5694fd90407444338a64d654e407cc0e/a10e6c0587a74e4781e3329c4ae732d6/liver-face_Kaede_Higuchi.png.webp?w=200&fm=webp",
-            "https://www.youtube.com/channel/UCsg-YqdqQ-KFF0LNk23BY4A",
-            ["1期生", "かえる"],
-        ),
-        new StreamerDetailImpl(
-            7,
-            "モイラ",
-            "https://images.microcms-assets.io/assets/5694fd90407444338a64d654e407cc0e/ea9f478820c84208840d248d5c6610d1/liver-face_Moira.png.webp?w=200&fm=webp",
-            "https://www.youtube.com/channel/UCvmppcdYf4HOv-tFQhHHJMA",
-            ["1期生"],
-        )
-    ]
-});
 
-const streamerListStateSelector = selector({
-    key: "streamerListState",
-    get: ({get}) => {
-        return get(streamerListState);
-    }
-})
-
-export default function Streamer(props: { id: number; }) {
-    const tmp = useRecoilValue(streamerListStateSelector);
-    const detail = tmp.find(_ => _.id === props.id);
-
-    if (detail === undefined) return (<></>);
-
-
+export default function Streamer(props: { item: StreamerDetail; }) {
     return (
         <Card sx={{
             p: 1,
@@ -90,23 +22,23 @@ export default function Streamer(props: { id: number; }) {
             <CardHeader
                 sx={{p: 1}}
                 avatar={
-                    <Avatar alt={detail.displayName} src={detail.thumbnail}/>
+                    <Avatar alt={props.item.displayName} src={props.item.thumbnail}/>
                 }
                 action={
                     <IconButton aria-label="settings">
                         <MoreVertIcon />
                     </IconButton>
                 }
-                title={detail.displayName}
+                title={props.item.displayName}
                 subheader="September 14, 2016"
             />
             <CardContent sx={{p: 1}}>
-                <StreamerLinkList primary={detail.primaryLink} other={detail.otherLinks} />
+                <StreamerLinkList primary={props.item.primaryLink} other={props.item.otherLinks} />
                 <Divider />
                 <Box>
-                    {detail.tags.map((_: Tag) => {
+                    {props.item.tags.map((_: Tag) => {
                         return (
-                            <Chip sx={{mt: 1, mr: 1}} label={_.value} />
+                            <Chip key={_.value} sx={{mt: 1, mr: 1}} label={_.value} />
                         )
                     })}
                 </Box>

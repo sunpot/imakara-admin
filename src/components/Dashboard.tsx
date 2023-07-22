@@ -17,19 +17,9 @@ import { mainListItems, secondaryListItems } from './listItems';
 import {Container, Grid} from "@mui/material";
 import Streamer from "./Streamer";
 import AddEditFrame from "./AddEditFrame";
+import {useRecoilValue} from "recoil";
+import {streamerListStateSelector} from "../state/streamers";
 
-// function Copyright(props: any) {
-//     return (
-//         <Typography variant="body2" color="text.secondary" align="center" {...props}>
-//             {'Copyright © '}
-//             <Link color="inherit" href="https://mui.com/">
-//                 Your Website
-//             </Link>{' '}
-//             {new Date().getFullYear()}
-//             {'.'}
-//         </Typography>
-//     );
-// }
 
 const drawerWidth = 240;
 
@@ -83,13 +73,15 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 const defaultTheme = createTheme();
 
+
+
+
 const liverList = () => {
-    const ids = [1,2,3,4,5,6,7]
-    console.log("liver list called");
-    return ids.map(id => {
+    const list = useRecoilValue(streamerListStateSelector);
+    return list.map(item => {
         return (
-            <Grid key={id} item xs={12} sm={6} md={4}>
-                <Streamer id={id} />
+            <Grid key={item.id} item xs={12} sm={6} md={4}>
+                <Streamer item={item} />
             </Grid>
         )
     });

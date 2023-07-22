@@ -16,7 +16,6 @@ import CardContent from "@mui/material/CardContent";
 import Divider from "@mui/material/Divider";
 
 
-
 export default function AddEditFrame() {
     const [open, setOpen] = React.useState(false);
     const [invalidUrl, setInvalidUrl] = React.useState({state: false, message: ""});
@@ -139,12 +138,3 @@ const tagList = [
     {title: "SEEDs 2期生"},
     {title: "ゲーマーズ"}
 ];
-
-function SmallLink(props: {data: StreamerDetail | undefined}){
-    if (props.data === undefined) {return (<></>)}
-    else {
-        return (
-            <Link href={props.data?.primaryLink.url} >Youtube</Link>
-        )
-    }
-}
