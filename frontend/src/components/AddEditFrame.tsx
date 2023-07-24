@@ -16,6 +16,7 @@ import CardContent from "@mui/material/CardContent";
 import Divider from "@mui/material/Divider";
 import {useRecoilState} from 'recoil';
 import {streamerListState} from "../state/streamers";
+import {YoutubeInfoRepository} from "../infra/grpc/YoutubeInfo";
 
 export default function AddEditFrame() {
     const [open, setOpen] = React.useState(false);
@@ -23,18 +24,20 @@ export default function AddEditFrame() {
     const [url, setUrl] = React.useState("");
     const [data, setData] = React.useState<StreamerDetailImpl|undefined>(undefined);
     const [list, setList] = useRecoilState(streamerListState)
+    const repo = new YoutubeInfoRepository();
 
     const handleClickOpen = () => {
         setOpen(true);
     };
 
-    const getNewStreamerTmp = () => {
-        const tmp = new StreamerDetailImpl(
-            100,
-            "夜見れな",
-            "https://yt3.googleusercontent.com/IIncCRzntW4-2phBOSa2hhvpq3CSbav32m1mDiC1ckYBDi9pD3IeBSft0su3R68qZuHdOt0z7g=s176-c-k-c0x00ffffff-no-rj",
-            "https://www.youtube.com/@YorumiRena",
-        );
+    const getNewStreamerTmp = async () => {
+        const tmp = await repo.getRegistered(url);
+        // const tmp = new StreamerDetailImpl(
+        //     100,
+        //     "夜見れな",
+        //     "https://yt3.googleusercontent.com/IIncCRzntW4-2phBOSa2hhvpq3CSbav32m1mDiC1ckYBDi9pD3IeBSft0su3R68qZuHdOt0z7g=s176-c-k-c0x00ffffff-no-rj",
+        //     "https://www.youtube.com/@YorumiRena",
+        // );
 
         setData(tmp);
     };
@@ -55,7 +58,7 @@ export default function AddEditFrame() {
         else if (url.startsWith("https://")) {
             setInvalidUrl({state: false, message: ""});
             alert(`Channel ${url} will be added.`);
-            getNewStreamerTmp();
+            getNewStreamerTmp().then(_ => null);
         } else {
             setInvalidUrl({state: true, message: "Please put a valid url"});
         }
