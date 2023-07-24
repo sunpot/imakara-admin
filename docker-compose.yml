@@ -1,0 +1,18 @@
+version: '3'
+services:
+  envoy:
+    image: envoyproxy/envoy:v1.15.0
+    container_name: envoy-grpc-proxy
+    ports:
+      - 9000:9000
+    volumes:
+      - ./proxy/envoy.yaml:/etc/envoy/envoy.yaml
+
+  youtube-info:
+    build:
+      context: ./backend/youtube-info
+    image: docker.io/library/imakara-admin-youtube-info
+    container_name: youtube-info
+    environment:
+      - YOUTUBE_INFO_API_KEY=
+

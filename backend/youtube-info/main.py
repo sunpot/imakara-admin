@@ -1,25 +1,27 @@
 # Import Module
-from googleapiclient.discovery import build
 from concurrent import futures
 import logging
+from os import environ
 
+from googleapiclient.discovery import build
 import grpc
 import streamer_info_pb2
 import streamer_info_pb2_grpc
 
+
 def parse_url_to_id(url):
     url = str(url).strip()
     if "www.youtube.com" in url:
-        return url.replace("https://www.youtube.com/","")
+        return url.replace("https://www.youtube.com/", "")
     else:
         raise NotImplementedError
+
 
 def get_youtube_info(streamer_id):
     # Create YouTube Object
     youtube = build('youtube', 'v3',
-                    developerKey='xxx')
+                    developerKey=environ['YOUTUBE_INFO_API_KEY'])
 
-    ch_request = None
     if streamer_id.startswith("@"):
         ch_request = youtube.search().list(
             type='channel', part='snippet', q=streamer_id)
@@ -35,6 +37,7 @@ def get_youtube_info(streamer_id):
     thumbnail = ch_response['items'][0]['snippet']['thumbnails']['default']['url']
     channel_id = ch_response['items'][0]['snippet']['channelId']
     return title, thumbnail, channel_id
+
 
 class StreamerInfo(streamer_info_pb2_grpc.frontendServicer):
     def GetStreamerInfo(self, request, context):
@@ -55,12 +58,12 @@ class StreamerInfo(streamer_info_pb2_grpc.frontendServicer):
 
 # Press the green button in the gutter to run the script.
 def serve():
-    port = "50051"
+    address = "0.0.0.0:50051"
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     streamer_info_pb2_grpc.add_frontendServicer_to_server(StreamerInfo(), server)
-    server.add_insecure_port("[::]:" + port)
+    server.add_insecure_port(address)
     server.start()
-    print("Server started, listening on " + port)
+    print("Server started, listening on " + address)
     server.wait_for_termination()
 
 
