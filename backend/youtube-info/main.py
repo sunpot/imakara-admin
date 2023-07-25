@@ -5,8 +5,8 @@ from os import environ
 
 from googleapiclient.discovery import build
 import grpc
-import streamer_info_pb2
-import streamer_info_pb2_grpc
+import common_pb2
+import common_pb2_grpc
 
 
 def parse_url_to_id(url):
@@ -36,23 +36,23 @@ def get_youtube_info(streamer_id):
     title = ch_response['items'][0]['snippet']['title']
     thumbnail = ch_response['items'][0]['snippet']['thumbnails']['default']['url']
     channel_id = ch_response['items'][0]['snippet']['channelId']
-    return title, thumbnail, channel_id
+    return title, thumbnail, "https://www.youtube.com/channel/%s" % channel_id
 
 
-class StreamerInfo(streamer_info_pb2_grpc.frontendServicer):
+class StreamerInfo(common_pb2_grpc.StreamerInfoServicer):
     def GetStreamerInfo(self, request, context):
         streamer_id = parse_url_to_id(request.url)
 
         (title, avatar_url, channel_id) = get_youtube_info(streamer_id)
 
-        return streamer_info_pb2.StreamerInfoResponse(
-            validation_response=streamer_info_pb2.ValidationResponse(
-                result=streamer_info_pb2.ValidationResult.SUCCESS,
+        return common_pb2.StreamerInfoResponse(
+            validation_response=common_pb2.ValidationResponse(
+                result=common_pb2.ValidationResult.SUCCESS,
                 reason=""
             ),
             title=title,
             avatar_url=avatar_url,
-            channel_id=channel_id
+            primary_channel=channel_id
         )
 
 
@@ -60,7 +60,7 @@ class StreamerInfo(streamer_info_pb2_grpc.frontendServicer):
 def serve():
     address = "0.0.0.0:50051"
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-    streamer_info_pb2_grpc.add_frontendServicer_to_server(StreamerInfo(), server)
+    common_pb2_grpc.add_StreamerInfoServicer_to_server(StreamerInfo(), server)
     server.add_insecure_port(address)
     server.start()
     print("Server started, listening on " + address)
@@ -72,4 +72,4 @@ if __name__ == "__main__":
     serve()
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
-# python -m grpc_tools.protoc -I../../protos --python_out=. --pyi_out=. --grpc_python_out=. ../../protos/helloworld.proto
+# python -m grpc_tools.protoc -I..\..\proto --python_out=. --pyi_out=. --grpc_python_out=. ..\..\proto\common.proto

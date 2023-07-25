@@ -1,18 +1,17 @@
 import { PromiseClient } from "@bufbuild/connect";
-import {frontend} from "../../proto/streamer-info_connect";
+import {StreamerInfo} from "../../proto/common_connect";
 
 import {Base} from "./Base";
-// import {ProgramItem, ProgramIndex} from "../../models/Program";
 import {IYoutubeInfoRepository} from "../IYoutubeInfo";
-import { StreamerInfoResponse} from "../../proto/streamer-info_pb";
+import { StreamerInfoResponse} from "../../proto/common_pb";
 import {StreamerDetailImpl} from "../../models/streamerDetail";
 
-export class YoutubeInfoRepository extends Base<typeof frontend> implements IYoutubeInfoRepository {
-    client: PromiseClient<typeof frontend>;
+export class YoutubeInfoRepository extends Base<typeof StreamerInfo> implements IYoutubeInfoRepository {
+    client: PromiseClient<typeof StreamerInfo>;
 
     constructor() {
         super();
-        this.client = this.getClient(frontend);
+        this.client = this.getClient(StreamerInfo);
     }
 
     getRegistered(url: string): Promise<StreamerDetailImpl> {
@@ -22,11 +21,11 @@ export class YoutubeInfoRepository extends Base<typeof frontend> implements IYou
                     url: url
                 })
                 .then((res: StreamerInfoResponse) => {
-                    let data = new StreamerDetailImpl(
+                    const data = new StreamerDetailImpl(
                         0,
                         res.title,
                         res.avatarUrl,
-                        "https://www.youtube.com" + res.channelId
+                        res.primaryChannel
                     );
                     resolve(data);
                 })

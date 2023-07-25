@@ -2,10 +2,10 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import streamer_info_pb2 as streamer__info__pb2
+import common_pb2 as common__pb2
 
 
-class frontendStub(object):
+class StreamerInfoStub(object):
     """Missing associated documentation comment in .proto file."""
 
     def __init__(self, channel):
@@ -15,13 +15,13 @@ class frontendStub(object):
             channel: A grpc.Channel.
         """
         self.GetStreamerInfo = channel.unary_unary(
-                '/imakara_admin.frontend/GetStreamerInfo',
-                request_serializer=streamer__info__pb2.StreamerInfoRequest.SerializeToString,
-                response_deserializer=streamer__info__pb2.StreamerInfoResponse.FromString,
+                '/imakara_admin_common.StreamerInfo/GetStreamerInfo',
+                request_serializer=common__pb2.StreamerInfoRequest.SerializeToString,
+                response_deserializer=common__pb2.StreamerInfoResponse.FromString,
                 )
 
 
-class frontendServicer(object):
+class StreamerInfoServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def GetStreamerInfo(self, request, context):
@@ -31,21 +31,21 @@ class frontendServicer(object):
         raise NotImplementedError('Method not implemented!')
 
 
-def add_frontendServicer_to_server(servicer, server):
+def add_StreamerInfoServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'GetStreamerInfo': grpc.unary_unary_rpc_method_handler(
                     servicer.GetStreamerInfo,
-                    request_deserializer=streamer__info__pb2.StreamerInfoRequest.FromString,
-                    response_serializer=streamer__info__pb2.StreamerInfoResponse.SerializeToString,
+                    request_deserializer=common__pb2.StreamerInfoRequest.FromString,
+                    response_serializer=common__pb2.StreamerInfoResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'imakara_admin.frontend', rpc_method_handlers)
+            'imakara_admin_common.StreamerInfo', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
  # This class is part of an EXPERIMENTAL API.
-class frontend(object):
+class StreamerInfo(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
@@ -59,8 +59,8 @@ class frontend(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/imakara_admin.frontend/GetStreamerInfo',
-            streamer__info__pb2.StreamerInfoRequest.SerializeToString,
-            streamer__info__pb2.StreamerInfoResponse.FromString,
+        return grpc.experimental.unary_unary(request, target, '/imakara_admin_common.StreamerInfo/GetStreamerInfo',
+            common__pb2.StreamerInfoRequest.SerializeToString,
+            common__pb2.StreamerInfoResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

@@ -1,7 +1,7 @@
 syntax = "proto3";
-package imakara_admin;
+package imakara_admin_common;
 
-service frontend {
+service StreamerInfo {
   rpc GetStreamerInfo (StreamerInfoRequest) returns (StreamerInfoResponse);
 }
 
@@ -13,7 +13,7 @@ message StreamerInfoResponse {
   ValidationResponse validation_response = 1;
   string title = 2;
   string avatar_url = 3;
-  string channel_id = 4;
+  string primary_channel = 4;
 }
 
 message ValidationResponse {
