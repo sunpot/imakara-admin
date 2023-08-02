@@ -348,6 +348,8 @@ dependencies = [
  "tokio",
  "tonic",
  "tonic-build",
+ "url",
+ "uuid",
 ]
 
 [[package]]
