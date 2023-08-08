@@ -26,9 +26,13 @@ static_resources:
                     - name: local_service
                       domains: ["*"]
                       routes:
-                        - match: { prefix: "/" }
+                        - match: { prefix: "/imakara_admin_frontend.*" }
                           route:
                             cluster: greeter_service
+                            max_grpc_timeout: 0s
+                        - match: { prefix: "/imakara_admin_common.StreamerInfo/" }
+                          route:
+                            cluster: datastore
                             max_grpc_timeout: 0s
                       cors:
                         allow_origin_string_match:
@@ -60,3 +64,21 @@ static_resources:
                     socket_address:
                       address: youtube-info
                       port_value: 50051
+    - name: datastore
+      connect_timeout: 10.0s
+      type: logical_dns
+      http2_protocol_options: {}
+      lb_policy: round_robin
+      dns_lookup_family: V4_ONLY
+      upstream_connection_options:
+        tcp_keepalive:
+          keepalive_time: 300
+      load_assignment:
+        cluster_name: cluster_0
+        endpoints:
+          - lb_endpoints:
+              - endpoint:
+                  address:
+                    socket_address:
+                      address: datastore
+                      port_value: 50001
