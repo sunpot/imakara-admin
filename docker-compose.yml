@@ -11,8 +11,37 @@ services:
   youtube-info:
     build:
       context: ./backend/youtube-info
+      dockerfile: ./backend/youtube-info/Dockerfile
     image: docker.io/library/imakara-admin-youtube-info
     container_name: youtube-info
     environment:
       - YOUTUBE_INFO_API_KEY=
 
+  datastore:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.backend.datastore
+    image: docker.io/library/imakara-admin-datastore
+    container_name: datastore
+    environment:
+      - username=root
+      - password=example
+      - db_address=mongo
+
+# Use root/example as user/password credentials
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
