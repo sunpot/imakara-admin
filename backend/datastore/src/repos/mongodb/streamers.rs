@@ -1,9 +1,9 @@
 use std::error::Error;
 use async_trait::async_trait;
-use std::str::FromStr;
-use futures_util::{StreamExt, TryStreamExt};
-use mongodb::{bson::doc, Client, bson::oid::ObjectId};
-use crate::domain::streamers::{Snippet};
+// use std::str::FromStr;
+use futures_util::{/*StreamExt,*/ TryStreamExt};
+use mongodb::{Client};
+use crate::domain::streamers::{Detail, Snippet};
 use crate::domain::infra::streamers::TStreamersRepository;
 use super::entity::*;
 
@@ -30,5 +30,15 @@ impl TStreamersRepository for MongoStreamersRepository {
             });
         }
         Ok(list)
+    }
+
+    async fn put_streamer(&self, streamer_detail: Detail) -> Result<(), Box<dyn Error>> {
+        let client = &self.0;
+        let item = Streamer::from_model(streamer_detail);
+        let collection = client
+            .database(super::DATABASE)
+            .collection::<Streamer>(COLLECTION);
+        collection.insert_one(item, None).await?;
+        Ok(())
     }
 }

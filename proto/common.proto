@@ -3,6 +3,26 @@ package imakara_admin_common;
 
 service StreamerInfo {
   rpc GetStreamerInfo (StreamerInfoRequest) returns (StreamerInfoResponse);
+  rpc ListStreamerInfo (ListStreamerInfoRequest) returns (ListStreamerInfoResponse);
+  rpc PutStreamerInfo (PutStreamerInfoRequest) returns (PutStreamerInfoResponse);
+}
+
+message ListStreamerInfoRequest {}
+
+message ListStreamerInfoResponse {
+  repeated string ids = 1;
+}
+
+message PutStreamerInfoRequest {
+  string title = 1;
+  string description = 2;
+  string avatar_url = 3;
+  string primary_channel = 4;
+}
+
+message PutStreamerInfoResponse {
+  ValidationResult result = 1;
+  string reason = 2;
 }
 
 message StreamerInfoRequest {

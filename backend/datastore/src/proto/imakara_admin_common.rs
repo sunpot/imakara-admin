@@ -1,5 +1,34 @@
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ListStreamerInfoRequest {}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ListStreamerInfoResponse {
+    #[prost(string, repeated, tag = "1")]
+    pub ids: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct PutStreamerInfoRequest {
+    #[prost(string, tag = "1")]
+    pub title: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub description: ::prost::alloc::string::String,
+    #[prost(string, tag = "3")]
+    pub avatar_url: ::prost::alloc::string::String,
+    #[prost(string, tag = "4")]
+    pub primary_channel: ::prost::alloc::string::String,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct PutStreamerInfoResponse {
+    #[prost(enumeration = "ValidationResult", tag = "1")]
+    pub result: i32,
+    #[prost(string, tag = "2")]
+    pub reason: ::prost::alloc::string::String,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct StreamerInfoRequest {
     #[prost(string, tag = "1")]
     pub url: ::prost::alloc::string::String,
@@ -64,6 +93,14 @@ pub mod streamer_info_server {
             &self,
             request: tonic::Request<super::StreamerInfoRequest>,
         ) -> Result<tonic::Response<super::StreamerInfoResponse>, tonic::Status>;
+        async fn list_streamer_info(
+            &self,
+            request: tonic::Request<super::ListStreamerInfoRequest>,
+        ) -> Result<tonic::Response<super::ListStreamerInfoResponse>, tonic::Status>;
+        async fn put_streamer_info(
+            &self,
+            request: tonic::Request<super::PutStreamerInfoRequest>,
+        ) -> Result<tonic::Response<super::PutStreamerInfoResponse>, tonic::Status>;
     }
     #[derive(Debug)]
     pub struct StreamerInfoServer<T: StreamerInfo> {
@@ -153,6 +190,86 @@ pub mod streamer_info_server {
                     let fut = async move {
                         let inner = inner.0;
                         let method = GetStreamerInfoSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/imakara_admin_common.StreamerInfo/ListStreamerInfo" => {
+                    #[allow(non_camel_case_types)]
+                    struct ListStreamerInfoSvc<T: StreamerInfo>(pub Arc<T>);
+                    impl<
+                        T: StreamerInfo,
+                    > tonic::server::UnaryService<super::ListStreamerInfoRequest>
+                    for ListStreamerInfoSvc<T> {
+                        type Response = super::ListStreamerInfoResponse;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::ListStreamerInfoRequest>,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move {
+                                (*inner).list_streamer_info(request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = ListStreamerInfoSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/imakara_admin_common.StreamerInfo/PutStreamerInfo" => {
+                    #[allow(non_camel_case_types)]
+                    struct PutStreamerInfoSvc<T: StreamerInfo>(pub Arc<T>);
+                    impl<
+                        T: StreamerInfo,
+                    > tonic::server::UnaryService<super::PutStreamerInfoRequest>
+                    for PutStreamerInfoSvc<T> {
+                        type Response = super::PutStreamerInfoResponse;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::PutStreamerInfoRequest>,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move {
+                                (*inner).put_streamer_info(request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = PutStreamerInfoSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
