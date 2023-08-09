@@ -36,4 +36,9 @@ impl Detail {
         repo.put_streamer(self).await?;
         Ok(())
     }
+
+    pub async fn get_by_id(id: &str) -> Result<Option<Self>, Box<dyn Error>> {
+        let repo = RepositoryFactory::streamers_repository().await?;
+        Ok(repo.get_streamer(id).await?)
+    }
 }

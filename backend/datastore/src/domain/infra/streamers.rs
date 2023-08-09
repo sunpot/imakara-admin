@@ -6,6 +6,7 @@ pub type StreamersRepository = dyn TStreamersRepository + Send + Sync;
 
 #[async_trait]
 pub trait TStreamersRepository {
-    async fn list_streamers(&self) -> Result<Vec<Snippet>, Box<dyn Error>>;
+    async fn list_streamers(&self) -> Result<Vec<Snippet>, Box<dyn Error>> ;
     async fn put_streamer(&self, streamer_detail: Detail) -> Result<(), Box<dyn Error>> ;
+    async fn get_streamer(&self, id: &str) -> Result<Option<Detail>, Box<dyn Error>> ;
 }

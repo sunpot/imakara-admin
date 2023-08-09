@@ -56,6 +56,24 @@ pub struct StreamerInfoResponse {
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
+pub struct StreamerDetailRequest {
+    #[prost(string, tag = "1")]
+    pub id: ::prost::alloc::string::String,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct StreamerDetailResponse {
+    #[prost(string, tag = "1")]
+    pub id: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub title: ::prost::alloc::string::String,
+    #[prost(string, tag = "3")]
+    pub avatar_url: ::prost::alloc::string::String,
+    #[prost(string, tag = "4")]
+    pub primary_channel: ::prost::alloc::string::String,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ValidationResponse {
     #[prost(enumeration = "ValidationResult", tag = "1")]
     pub result: i32,
@@ -292,10 +310,10 @@ pub mod common_server {
     /// Generated trait containing gRPC methods that should be implemented for use with CommonServer.
     #[async_trait]
     pub trait Common: Send + Sync + 'static {
-        async fn get_streamer_info(
+        async fn get_streamer_detail(
             &self,
-            request: tonic::Request<super::StreamerInfoRequest>,
-        ) -> Result<tonic::Response<super::StreamerInfoResponse>, tonic::Status>;
+            request: tonic::Request<super::StreamerDetailRequest>,
+        ) -> Result<tonic::Response<super::StreamerDetailResponse>, tonic::Status>;
         async fn list_streamer_info(
             &self,
             request: tonic::Request<super::ListStreamerInfoRequest>,
@@ -364,25 +382,25 @@ pub mod common_server {
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             let inner = self.inner.clone();
             match req.uri().path() {
-                "/imakara_admin.Common/GetStreamerInfo" => {
+                "/imakara_admin.Common/GetStreamerDetail" => {
                     #[allow(non_camel_case_types)]
-                    struct GetStreamerInfoSvc<T: Common>(pub Arc<T>);
+                    struct GetStreamerDetailSvc<T: Common>(pub Arc<T>);
                     impl<
                         T: Common,
-                    > tonic::server::UnaryService<super::StreamerInfoRequest>
-                    for GetStreamerInfoSvc<T> {
-                        type Response = super::StreamerInfoResponse;
+                    > tonic::server::UnaryService<super::StreamerDetailRequest>
+                    for GetStreamerDetailSvc<T> {
+                        type Response = super::StreamerDetailResponse;
                         type Future = BoxFuture<
                             tonic::Response<Self::Response>,
                             tonic::Status,
                         >;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::StreamerInfoRequest>,
+                            request: tonic::Request<super::StreamerDetailRequest>,
                         ) -> Self::Future {
                             let inner = self.0.clone();
                             let fut = async move {
-                                (*inner).get_streamer_info(request).await
+                                (*inner).get_streamer_detail(request).await
                             };
                             Box::pin(fut)
                         }
@@ -392,7 +410,7 @@ pub mod common_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
-                        let method = GetStreamerInfoSvc(inner);
+                        let method = GetStreamerDetailSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(

@@ -1,28 +1,34 @@
+use std::error::Error;
+use std::future::Future;
 // use std::error::Error;
 use tonic::{transport::Server, Request, Response, Status, Code};
 // use tonic::service::interceptor;
 use crate::domain::streamers::{Snippet, Detail};
-use crate::proto::imakara_admin::{
-    StreamerInfoRequest,
-    StreamerInfoResponse,
-    common_server::{
-        Common,
-        CommonServer,
-    },
-    PutStreamerInfoRequest,
-    PutStreamerInfoResponse,
-    ListStreamerInfoRequest,
-    ListStreamerInfoResponse,
-    ValidationResult
-};
+use crate::proto::imakara_admin::{StreamerInfoRequest, StreamerInfoResponse, common_server::{
+    Common,
+    CommonServer,
+}, PutStreamerInfoRequest, PutStreamerInfoResponse, ListStreamerInfoRequest, ListStreamerInfoResponse, ValidationResult, StreamerDetailRequest, StreamerDetailResponse};
 
 #[derive(Debug, Default)]
 pub struct CommonImpl {}
 
 #[tonic::async_trait]
 impl Common for CommonImpl {
-    async fn get_streamer_info(&self, _: Request<StreamerInfoRequest>) -> Result<Response<StreamerInfoResponse>, Status> {
-        todo!()
+    async fn get_streamer_detail(&self, request: Request<StreamerDetailRequest>) -> Result<Response<StreamerDetailResponse>, Status> {
+        Ok(match Detail::get_by_id(request.into_inner().id.as_str()).await {
+            Ok(v) => match v {
+                None => return Err(Status::new(Code::NotFound, "")),
+                Some(v) => {
+                    Response::new(StreamerDetailResponse {
+                        id: v.snippet.id,
+                        title: v.title,
+                        avatar_url: v.avatar_url,
+                        primary_channel: v.snippet.primary_url,
+                    })
+                }
+            },
+            Err(e) => return Err(Status::new(Code::Internal, e.to_string())),
+        })
     }
 
     async fn list_streamer_info(&self, _: Request<ListStreamerInfoRequest>) -> Result<Response<ListStreamerInfoResponse>, Status> {

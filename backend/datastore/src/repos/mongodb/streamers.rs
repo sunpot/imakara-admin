@@ -3,6 +3,7 @@ use async_trait::async_trait;
 // use std::str::FromStr;
 use futures_util::{/*StreamExt,*/ TryStreamExt};
 use mongodb::{Client};
+use mongodb::bson::doc;
 use crate::domain::streamers::{Detail, Snippet};
 use crate::domain::infra::streamers::TStreamersRepository;
 use super::entity::*;
@@ -40,5 +41,26 @@ impl TStreamersRepository for MongoStreamersRepository {
             .collection::<Streamer>(COLLECTION);
         collection.insert_one(item, None).await?;
         Ok(())
+    }
+
+    async fn get_streamer(&self, id: &str) -> Result<Option<Detail>, Box<dyn Error>> {
+        let client = &self.0;
+        let collection = client
+            .database(super::DATABASE)
+            .collection::<Streamer>(COLLECTION);
+        let filter = doc! {"id": id};
+        let result = match collection.find_one(filter, None).await? {
+            Some(v) => Some(Detail {
+                snippet: Snippet { id: v.id, primary_url: v.channel_url },
+                title: v.title,
+                locale: "".to_string(),
+                description: v.description,
+                thumbnail_url: "".to_string(),
+                avatar_url: v.avatar_url,
+            }),
+            None => None
+        };
+
+        Ok(result)
     }
 }
