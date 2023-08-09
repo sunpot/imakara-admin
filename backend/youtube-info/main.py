@@ -39,7 +39,7 @@ def get_youtube_info(streamer_id):
     return title, thumbnail, "https://www.youtube.com/channel/%s" % channel_id
 
 
-class StreamerInfo(common_pb2_grpc.StreamerInfoServicer):
+class StreamerInfo(common_pb2_grpc.DashboardServicer):
     def GetStreamerInfo(self, request, context):
         streamer_id = parse_url_to_id(request.url)
 
@@ -60,7 +60,7 @@ class StreamerInfo(common_pb2_grpc.StreamerInfoServicer):
 def serve():
     address = "0.0.0.0:50051"
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-    common_pb2_grpc.add_StreamerInfoServicer_to_server(StreamerInfo(), server)
+    common_pb2_grpc.add_DashboardServicer_to_server(StreamerInfo(), server)
     server.add_insecure_port(address)
     server.start()
     print("Server started, listening on " + address)

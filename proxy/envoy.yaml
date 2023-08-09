@@ -26,11 +26,11 @@ static_resources:
                     - name: local_service
                       domains: ["*"]
                       routes:
-                        - match: { prefix: "/imakara_admin_frontend.*" }
+                        - match: { prefix: "/imakara_admin.Dashboard/" }
                           route:
                             cluster: greeter_service
                             max_grpc_timeout: 0s
-                        - match: { prefix: "/imakara_admin_common.StreamerInfo/" }
+                        - match: { prefix: "/imakara_admin.Common/" }
                           route:
                             cluster: datastore
                             max_grpc_timeout: 0s

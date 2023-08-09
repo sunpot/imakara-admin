@@ -2,16 +2,25 @@
 use tonic::{transport::Server, Request, Response, Status, Code};
 // use tonic::service::interceptor;
 use crate::domain::streamers::{Snippet, Detail};
-use crate::proto::imakara_admin_common::{StreamerInfoRequest, StreamerInfoResponse, streamer_info_server::{
-    StreamerInfo,
-    StreamerInfoServer
-}, PutStreamerInfoRequest, PutStreamerInfoResponse, ListStreamerInfoRequest, ListStreamerInfoResponse, ValidationResult};
+use crate::proto::imakara_admin::{
+    StreamerInfoRequest,
+    StreamerInfoResponse,
+    common_server::{
+        Common,
+        CommonServer,
+    },
+    PutStreamerInfoRequest,
+    PutStreamerInfoResponse,
+    ListStreamerInfoRequest,
+    ListStreamerInfoResponse,
+    ValidationResult
+};
 
 #[derive(Debug, Default)]
-pub struct StreamerInfoImpl {}
+pub struct CommonImpl {}
 
 #[tonic::async_trait]
-impl StreamerInfo for StreamerInfoImpl {
+impl Common for CommonImpl {
     async fn get_streamer_info(&self, _: Request<StreamerInfoRequest>) -> Result<Response<StreamerInfoResponse>, Status> {
         todo!()
     }
@@ -56,7 +65,7 @@ pub async fn run() -> Result<(), Box<dyn std::error::Error>> {
     println!("Hello, server: {}", addr);
 
     Server::builder()
-        .add_service(StreamerInfoServer::new(StreamerInfoImpl::default()))
+        .add_service(CommonServer::new(CommonImpl::default()))
         .serve(addr)
         .await?;
 

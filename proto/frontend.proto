@@ -1,12 +1,4 @@
 syntax = "proto3";
-package imakara_admin_frontend;
+package imakara_admin;
 
-service Dashboard {
-  rpc ListStreamers (ListStreamersRequest) returns (ListStreamersResponse);
-}
 
-message ListStreamersRequest { }
-
-message ListStreamersResponse {
-    repeated string streamers = 1;
-}

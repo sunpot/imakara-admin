@@ -11,7 +11,7 @@ services:
   youtube-info:
     build:
       context: ./backend/youtube-info
-      dockerfile: ./backend/youtube-info/Dockerfile
+      dockerfile: ./Dockerfile
     image: docker.io/library/imakara-admin-youtube-info
     container_name: youtube-info
     environment:

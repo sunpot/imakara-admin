@@ -1,8 +1,19 @@
 syntax = "proto3";
-package imakara_admin_common;
+package imakara_admin;
 
-service StreamerInfo {
+service Dashboard {
+  rpc ListStreamers (ListStreamersRequest) returns (ListStreamersResponse);
   rpc GetStreamerInfo (StreamerInfoRequest) returns (StreamerInfoResponse);
+}
+
+message ListStreamersRequest { }
+
+message ListStreamersResponse {
+    repeated string streamers = 1;
+}
+
+service Common {
+  rpc GetStreamerDetail (StreamerDetailRequest) returns (StreamerDetailResponse);
   rpc ListStreamerInfo (ListStreamerInfoRequest) returns (ListStreamerInfoResponse);
   rpc PutStreamerInfo (PutStreamerInfoRequest) returns (PutStreamerInfoResponse);
 }
@@ -31,6 +42,17 @@ message StreamerInfoRequest {
 
 message StreamerInfoResponse {
   ValidationResponse validation_response = 1;
+  string title = 2;
+  string avatar_url = 3;
+  string primary_channel = 4;
+}
+
+message StreamerDetailRequest {
+  string id = 1;
+}
+
+message StreamerDetailResponse {
+  string id = 1;
   string title = 2;
   string avatar_url = 3;
   string primary_channel = 4;

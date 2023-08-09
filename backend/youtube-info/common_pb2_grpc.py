@@ -5,7 +5,101 @@ import grpc
 import common_pb2 as common__pb2
 
 
-class StreamerInfoStub(object):
+class DashboardStub(object):
+    """Missing associated documentation comment in .proto file."""
+
+    def __init__(self, channel):
+        """Constructor.
+
+        Args:
+            channel: A grpc.Channel.
+        """
+        self.ListStreamers = channel.unary_unary(
+                '/imakara_admin.Dashboard/ListStreamers',
+                request_serializer=common__pb2.ListStreamersRequest.SerializeToString,
+                response_deserializer=common__pb2.ListStreamersResponse.FromString,
+                )
+        self.GetStreamerInfo = channel.unary_unary(
+                '/imakara_admin.Dashboard/GetStreamerInfo',
+                request_serializer=common__pb2.StreamerInfoRequest.SerializeToString,
+                response_deserializer=common__pb2.StreamerInfoResponse.FromString,
+                )
+
+
+class DashboardServicer(object):
+    """Missing associated documentation comment in .proto file."""
+
+    def ListStreamers(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetStreamerInfo(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+
+def add_DashboardServicer_to_server(servicer, server):
+    rpc_method_handlers = {
+            'ListStreamers': grpc.unary_unary_rpc_method_handler(
+                    servicer.ListStreamers,
+                    request_deserializer=common__pb2.ListStreamersRequest.FromString,
+                    response_serializer=common__pb2.ListStreamersResponse.SerializeToString,
+            ),
+            'GetStreamerInfo': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetStreamerInfo,
+                    request_deserializer=common__pb2.StreamerInfoRequest.FromString,
+                    response_serializer=common__pb2.StreamerInfoResponse.SerializeToString,
+            ),
+    }
+    generic_handler = grpc.method_handlers_generic_handler(
+            'imakara_admin.Dashboard', rpc_method_handlers)
+    server.add_generic_rpc_handlers((generic_handler,))
+
+
+ # This class is part of an EXPERIMENTAL API.
+class Dashboard(object):
+    """Missing associated documentation comment in .proto file."""
+
+    @staticmethod
+    def ListStreamers(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/imakara_admin.Dashboard/ListStreamers',
+            common__pb2.ListStreamersRequest.SerializeToString,
+            common__pb2.ListStreamersResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetStreamerInfo(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/imakara_admin.Dashboard/GetStreamerInfo',
+            common__pb2.StreamerInfoRequest.SerializeToString,
+            common__pb2.StreamerInfoResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+
+class CommonStub(object):
     """Missing associated documentation comment in .proto file."""
 
     def __init__(self, channel):
@@ -15,13 +109,23 @@ class StreamerInfoStub(object):
             channel: A grpc.Channel.
         """
         self.GetStreamerInfo = channel.unary_unary(
-                '/imakara_admin_common.StreamerInfo/GetStreamerInfo',
+                '/imakara_admin.Common/GetStreamerInfo',
                 request_serializer=common__pb2.StreamerInfoRequest.SerializeToString,
                 response_deserializer=common__pb2.StreamerInfoResponse.FromString,
                 )
+        self.ListStreamerInfo = channel.unary_unary(
+                '/imakara_admin.Common/ListStreamerInfo',
+                request_serializer=common__pb2.ListStreamerInfoRequest.SerializeToString,
+                response_deserializer=common__pb2.ListStreamerInfoResponse.FromString,
+                )
+        self.PutStreamerInfo = channel.unary_unary(
+                '/imakara_admin.Common/PutStreamerInfo',
+                request_serializer=common__pb2.PutStreamerInfoRequest.SerializeToString,
+                response_deserializer=common__pb2.PutStreamerInfoResponse.FromString,
+                )
 
 
-class StreamerInfoServicer(object):
+class CommonServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def GetStreamerInfo(self, request, context):
@@ -30,22 +134,44 @@ class StreamerInfoServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def ListStreamerInfo(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
 
-def add_StreamerInfoServicer_to_server(servicer, server):
+    def PutStreamerInfo(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+
+def add_CommonServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'GetStreamerInfo': grpc.unary_unary_rpc_method_handler(
                     servicer.GetStreamerInfo,
                     request_deserializer=common__pb2.StreamerInfoRequest.FromString,
                     response_serializer=common__pb2.StreamerInfoResponse.SerializeToString,
             ),
+            'ListStreamerInfo': grpc.unary_unary_rpc_method_handler(
+                    servicer.ListStreamerInfo,
+                    request_deserializer=common__pb2.ListStreamerInfoRequest.FromString,
+                    response_serializer=common__pb2.ListStreamerInfoResponse.SerializeToString,
+            ),
+            'PutStreamerInfo': grpc.unary_unary_rpc_method_handler(
+                    servicer.PutStreamerInfo,
+                    request_deserializer=common__pb2.PutStreamerInfoRequest.FromString,
+                    response_serializer=common__pb2.PutStreamerInfoResponse.SerializeToString,
+            ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'imakara_admin_common.StreamerInfo', rpc_method_handlers)
+            'imakara_admin.Common', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
  # This class is part of an EXPERIMENTAL API.
-class StreamerInfo(object):
+class Common(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
@@ -59,8 +185,42 @@ class StreamerInfo(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/imakara_admin_common.StreamerInfo/GetStreamerInfo',
+        return grpc.experimental.unary_unary(request, target, '/imakara_admin.Common/GetStreamerInfo',
             common__pb2.StreamerInfoRequest.SerializeToString,
             common__pb2.StreamerInfoResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def ListStreamerInfo(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/imakara_admin.Common/ListStreamerInfo',
+            common__pb2.ListStreamerInfoRequest.SerializeToString,
+            common__pb2.ListStreamerInfoResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def PutStreamerInfo(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/imakara_admin.Common/PutStreamerInfo',
+            common__pb2.PutStreamerInfoRequest.SerializeToString,
+            common__pb2.PutStreamerInfoResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

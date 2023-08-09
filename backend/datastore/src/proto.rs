@@ -1,1 +1,1 @@
-pub mod imakara_admin_common;
+pub mod imakara_admin;
