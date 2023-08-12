@@ -7,8 +7,7 @@ import {createPromiseClient, PromiseClient} from "@bufbuild/connect";
 import {ServiceType} from "@bufbuild/protobuf";
 
 export class Base<T> {
-    constructor() {
-    }
+    constructor() {return}
 
     getClient<T extends ServiceType>(service: T): PromiseClient<T> {
         const transport = createGrpcWebTransport({

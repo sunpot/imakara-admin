@@ -1,5 +1,5 @@
 export interface StreamerDetail {
-    id: number,
+    id: string,
     displayName: string,
     thumbnail: string,
     primaryLink: StreamerLink,
@@ -17,14 +17,14 @@ export interface StreamerLink {
 }
 
 export class StreamerDetailImpl implements StreamerDetail {
-    id: number;
+    id: string;
     displayName: string;
     thumbnail: string;
     otherLinks: Array<StreamerLink>;
     primaryLink: StreamerLink;
     tags: Array<Tag>;
 
-    constructor(id: number, displayName: string, thumbnail: string, primaryLink: string, tags: string[] = []) {
+    constructor(id: string, displayName: string, thumbnail: string, primaryLink: string, tags: string[] = []) {
         this.id = id;
         this.displayName = displayName;
         this.thumbnail = thumbnail;

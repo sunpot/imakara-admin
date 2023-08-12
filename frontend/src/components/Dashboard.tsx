@@ -17,8 +17,9 @@ import { mainListItems, secondaryListItems } from './listItems';
 import {Container, Grid} from "@mui/material";
 import Streamer from "./Streamer";
 import AddEditFrame from "./AddEditFrame";
-import {useRecoilValue} from "recoil";
-import {streamerListStateSelector} from "../state/streamers";
+import {DatastoreRepository} from "../infra/grpc/DatastoreRepository.ts";
+import {useEffect, useState} from "react";
+import {StreamerDetailImpl} from "../models/streamerDetail.ts";
 
 
 const drawerWidth = 240;
@@ -73,15 +74,11 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 const defaultTheme = createTheme();
 
-
-
-
-const liverList = () => {
-    const list = useRecoilValue(streamerListStateSelector);
-    return list.map(item => {
+const liverList = (data: StreamerDetailImpl[]) => {
+    return data.map(item => {
         return (
             <Grid key={item.id} item xs={12} sm={6} md={4}>
-                <Streamer item={item} />
+                <Streamer item={item}/>
             </Grid>
         )
     });
@@ -89,6 +86,23 @@ const liverList = () => {
 
 export default function Dashboard() {
     const [open, setOpen] = React.useState(true);
+    //const ids = useRecoilValue(streamerListStateSelector);
+    const [items, setData] = useState(new Array<StreamerDetailImpl>())
+    useEffect(() => {
+        const repo = new DatastoreRepository();
+
+        async function getData(){
+            const ids = await repo.listRegistered();
+            const data = new Array<StreamerDetailImpl>();
+            ids.map(async (id) => {
+                const t = await repo.getDetail(id);
+                data.push(t);
+            })
+            setData(data);
+        }
+
+        void getData().then();
+    },[])
     const toggleDrawer = () => {
         setOpen(!open);
     };
@@ -166,7 +180,7 @@ export default function Dashboard() {
                 >
                     <Container maxWidth="lg" sx={{ mt: 4, mb: 4}}>
                         <Grid container spacing={3}>
-                            {liverList()}
+                            {liverList(items)}
                         </Grid>
                     </Container>
                     <AddEditFrame />

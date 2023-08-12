@@ -32,12 +32,6 @@ export default function AddEditFrame() {
 
     const getNewStreamerTmp = async () => {
         const tmp = await repo.getRegistered(url);
-        // const tmp = new StreamerDetailImpl(
-        //     100,
-        //     "夜見れな",
-        //     "https://yt3.googleusercontent.com/IIncCRzntW4-2phBOSa2hhvpq3CSbav32m1mDiC1ckYBDi9pD3IeBSft0su3R68qZuHdOt0z7g=s176-c-k-c0x00ffffff-no-rj",
-        //     "https://www.youtube.com/@YorumiRena",
-        // );
 
         setData(tmp);
     };
@@ -46,19 +40,16 @@ export default function AddEditFrame() {
         setOpen(false);
         setUrl("");
         if (data !== undefined) {
-            setList([...list, data]);
+            setList([...list, data.id]);
         }
         setData(undefined);
     };
 
     const handleSubscribe = (url: string) => {
-        if (list.find(_ => _.primaryLink.url === url)) {
-            setInvalidUrl({state: true, message: "Already exists."});
-        }
-        else if (url.startsWith("https://")) {
+        if (url.startsWith("https://")) {
             setInvalidUrl({state: false, message: ""});
             alert(`Channel ${url} will be added.`);
-            getNewStreamerTmp().then(_ => null);
+            void getNewStreamerTmp().then(_ => null);
         } else {
             setInvalidUrl({state: true, message: "Please put a valid url"});
         }
