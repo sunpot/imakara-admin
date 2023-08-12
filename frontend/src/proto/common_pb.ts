@@ -327,6 +327,11 @@ export class StreamerInfoResponse extends Message<StreamerInfoResponse> {
    */
   primaryChannel = "";
 
+  /**
+   * @generated from field: string description = 5;
+   */
+  description = "";
+
   constructor(data?: PartialMessage<StreamerInfoResponse>) {
     super();
     proto3.util.initPartial(data, this);
@@ -339,6 +344,7 @@ export class StreamerInfoResponse extends Message<StreamerInfoResponse> {
     { no: 2, name: "title", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 3, name: "avatar_url", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 4, name: "primary_channel", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "description", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): StreamerInfoResponse {
@@ -419,6 +425,11 @@ export class StreamerDetailResponse extends Message<StreamerDetailResponse> {
    */
   primaryChannel = "";
 
+  /**
+   * @generated from field: string description = 5;
+   */
+  description = "";
+
   constructor(data?: PartialMessage<StreamerDetailResponse>) {
     super();
     proto3.util.initPartial(data, this);
@@ -431,6 +442,7 @@ export class StreamerDetailResponse extends Message<StreamerDetailResponse> {
     { no: 2, name: "title", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 3, name: "avatar_url", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 4, name: "primary_channel", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "description", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): StreamerDetailResponse {

@@ -22,6 +22,7 @@ impl Common for CommonImpl {
                     Response::new(StreamerDetailResponse {
                         id: v.snippet.id,
                         title: v.title,
+                        description: v.description,
                         avatar_url: v.avatar_url,
                         primary_channel: v.snippet.primary_url,
                     })

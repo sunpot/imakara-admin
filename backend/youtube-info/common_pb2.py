@@ -13,7 +13,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0c\x63ommon.proto\x12\rimakara_admin\"\x16\n\x14ListStreamersRequest\"*\n\x15ListStreamersResponse\x12\x11\n\tstreamers\x18\x01 \x03(\t\"\x19\n\x17ListStreamerInfoRequest\"\'\n\x18ListStreamerInfoResponse\x12\x0b\n\x03ids\x18\x01 \x03(\t\"i\n\x16PutStreamerInfoRequest\x12\r\n\x05title\x18\x01 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x02 \x01(\t\x12\x12\n\navatar_url\x18\x03 \x01(\t\x12\x17\n\x0fprimary_channel\x18\x04 \x01(\t\"Z\n\x17PutStreamerInfoResponse\x12/\n\x06result\x18\x01 \x01(\x0e\x32\x1f.imakara_admin.ValidationResult\x12\x0e\n\x06reason\x18\x02 \x01(\t\"\"\n\x13StreamerInfoRequest\x12\x0b\n\x03url\x18\x01 \x01(\t\"\x92\x01\n\x14StreamerInfoResponse\x12>\n\x13validation_response\x18\x01 \x01(\x0b\x32!.imakara_admin.ValidationResponse\x12\r\n\x05title\x18\x02 \x01(\t\x12\x12\n\navatar_url\x18\x03 \x01(\t\x12\x17\n\x0fprimary_channel\x18\x04 \x01(\t\"U\n\x12ValidationResponse\x12/\n\x06result\x18\x01 \x01(\x0e\x32\x1f.imakara_admin.ValidationResult\x12\x0e\n\x06reason\x18\x02 \x01(\t*9\n\x10ValidationResult\x12\x0b\n\x07UNKNOWN\x10\x00\x12\x0b\n\x07SUCCESS\x10\x01\x12\x0b\n\x07\x46\x41ILURE\x10\x02\x32\xc3\x01\n\tDashboard\x12Z\n\rListStreamers\x12#.imakara_admin.ListStreamersRequest\x1a$.imakara_admin.ListStreamersResponse\x12Z\n\x0fGetStreamerInfo\x12\".imakara_admin.StreamerInfoRequest\x1a#.imakara_admin.StreamerInfoResponse2\xab\x02\n\x06\x43ommon\x12Z\n\x0fGetStreamerInfo\x12\".imakara_admin.StreamerInfoRequest\x1a#.imakara_admin.StreamerInfoResponse\x12\x63\n\x10ListStreamerInfo\x12&.imakara_admin.ListStreamerInfoRequest\x1a\'.imakara_admin.ListStreamerInfoResponse\x12`\n\x0fPutStreamerInfo\x12%.imakara_admin.PutStreamerInfoRequest\x1a&.imakara_admin.PutStreamerInfoResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0c\x63ommon.proto\x12\rimakara_admin\"\x16\n\x14ListStreamersRequest\"*\n\x15ListStreamersResponse\x12\x11\n\tstreamers\x18\x01 \x03(\t\"\x19\n\x17ListStreamerInfoRequest\"\'\n\x18ListStreamerInfoResponse\x12\x0b\n\x03ids\x18\x01 \x03(\t\"i\n\x16PutStreamerInfoRequest\x12\r\n\x05title\x18\x01 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x02 \x01(\t\x12\x12\n\navatar_url\x18\x03 \x01(\t\x12\x17\n\x0fprimary_channel\x18\x04 \x01(\t\"Z\n\x17PutStreamerInfoResponse\x12/\n\x06result\x18\x01 \x01(\x0e\x32\x1f.imakara_admin.ValidationResult\x12\x0e\n\x06reason\x18\x02 \x01(\t\"\"\n\x13StreamerInfoRequest\x12\x0b\n\x03url\x18\x01 \x01(\t\"\xa7\x01\n\x14StreamerInfoResponse\x12>\n\x13validation_response\x18\x01 \x01(\x0b\x32!.imakara_admin.ValidationResponse\x12\r\n\x05title\x18\x02 \x01(\t\x12\x12\n\navatar_url\x18\x03 \x01(\t\x12\x17\n\x0fprimary_channel\x18\x04 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x05 \x01(\t\"#\n\x15StreamerDetailRequest\x12\n\n\x02id\x18\x01 \x01(\t\"u\n\x16StreamerDetailResponse\x12\n\n\x02id\x18\x01 \x01(\t\x12\r\n\x05title\x18\x02 \x01(\t\x12\x12\n\navatar_url\x18\x03 \x01(\t\x12\x17\n\x0fprimary_channel\x18\x04 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x05 \x01(\t\"U\n\x12ValidationResponse\x12/\n\x06result\x18\x01 \x01(\x0e\x32\x1f.imakara_admin.ValidationResult\x12\x0e\n\x06reason\x18\x02 \x01(\t*9\n\x10ValidationResult\x12\x0b\n\x07UNKNOWN\x10\x00\x12\x0b\n\x07SUCCESS\x10\x01\x12\x0b\n\x07\x46\x41ILURE\x10\x02\x32\xc3\x01\n\tDashboard\x12Z\n\rListStreamers\x12#.imakara_admin.ListStreamersRequest\x1a$.imakara_admin.ListStreamersResponse\x12Z\n\x0fGetStreamerInfo\x12\".imakara_admin.StreamerInfoRequest\x1a#.imakara_admin.StreamerInfoResponse2\xb1\x02\n\x06\x43ommon\x12`\n\x11GetStreamerDetail\x12$.imakara_admin.StreamerDetailRequest\x1a%.imakara_admin.StreamerDetailResponse\x12\x63\n\x10ListStreamerInfo\x12&.imakara_admin.ListStreamerInfoRequest\x1a\'.imakara_admin.ListStreamerInfoResponse\x12`\n\x0fPutStreamerInfo\x12%.imakara_admin.PutStreamerInfoRequest\x1a&.imakara_admin.PutStreamerInfoResponseb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -21,8 +21,8 @@ _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'common_pb2', _globals)
 if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
-  _globals['_VALIDATIONRESULT']._serialized_start=638
-  _globals['_VALIDATIONRESULT']._serialized_end=695
+  _globals['_VALIDATIONRESULT']._serialized_start=815
+  _globals['_VALIDATIONRESULT']._serialized_end=872
   _globals['_LISTSTREAMERSREQUEST']._serialized_start=31
   _globals['_LISTSTREAMERSREQUEST']._serialized_end=53
   _globals['_LISTSTREAMERSRESPONSE']._serialized_start=55
@@ -38,11 +38,15 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['_STREAMERINFOREQUEST']._serialized_start=366
   _globals['_STREAMERINFOREQUEST']._serialized_end=400
   _globals['_STREAMERINFORESPONSE']._serialized_start=403
-  _globals['_STREAMERINFORESPONSE']._serialized_end=549
-  _globals['_VALIDATIONRESPONSE']._serialized_start=551
-  _globals['_VALIDATIONRESPONSE']._serialized_end=636
-  _globals['_DASHBOARD']._serialized_start=698
-  _globals['_DASHBOARD']._serialized_end=893
-  _globals['_COMMON']._serialized_start=896
-  _globals['_COMMON']._serialized_end=1195
+  _globals['_STREAMERINFORESPONSE']._serialized_end=570
+  _globals['_STREAMERDETAILREQUEST']._serialized_start=572
+  _globals['_STREAMERDETAILREQUEST']._serialized_end=607
+  _globals['_STREAMERDETAILRESPONSE']._serialized_start=609
+  _globals['_STREAMERDETAILRESPONSE']._serialized_end=726
+  _globals['_VALIDATIONRESPONSE']._serialized_start=728
+  _globals['_VALIDATIONRESPONSE']._serialized_end=813
+  _globals['_DASHBOARD']._serialized_start=875
+  _globals['_DASHBOARD']._serialized_end=1070
+  _globals['_COMMON']._serialized_start=1073
+  _globals['_COMMON']._serialized_end=1378
 # @@protoc_insertion_point(module_scope)

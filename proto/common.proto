@@ -45,6 +45,7 @@ message StreamerInfoResponse {
   string title = 2;
   string avatar_url = 3;
   string primary_channel = 4;
+  string description = 5;
 }
 
 message StreamerDetailRequest {
@@ -56,6 +57,7 @@ message StreamerDetailResponse {
   string title = 2;
   string avatar_url = 3;
   string primary_channel = 4;
+  string description = 5;
 }
 
 message ValidationResponse {

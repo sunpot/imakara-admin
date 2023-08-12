@@ -25,6 +25,7 @@ export class YoutubeInfoRepository extends Base<typeof Dashboard> implements IYo
                         "",
                         res.title,
                         res.avatarUrl,
+                        res.description,
                         res.primaryChannel
                     );
                     resolve(data);

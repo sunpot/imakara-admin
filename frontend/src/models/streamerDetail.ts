@@ -2,6 +2,7 @@ export interface StreamerDetail {
     id: string,
     displayName: string,
     thumbnail: string,
+    description: string,
     primaryLink: StreamerLink,
     otherLinks: Array<StreamerLink>,
     tags: Array<Tag>,
@@ -20,14 +21,16 @@ export class StreamerDetailImpl implements StreamerDetail {
     id: string;
     displayName: string;
     thumbnail: string;
+    description: string;
     otherLinks: Array<StreamerLink>;
     primaryLink: StreamerLink;
     tags: Array<Tag>;
 
-    constructor(id: string, displayName: string, thumbnail: string, primaryLink: string, tags: string[] = []) {
+    constructor(id: string, displayName: string, thumbnail: string, description: string, primaryLink: string, tags: string[] = []) {
         this.id = id;
         this.displayName = displayName;
         this.thumbnail = thumbnail;
+        this.description = description;
         this.primaryLink = new StreamerLinkImpl(primaryLink);
         this.otherLinks = [];
         this.tags = tags.map(_ => {return new TagImpl(_)});

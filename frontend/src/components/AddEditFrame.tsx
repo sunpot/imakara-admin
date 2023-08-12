@@ -113,6 +113,14 @@ export default function AddEditFrame() {
                         }
                     />
                     <CardContent sx={{p: 1}}>
+                        <TextField
+                            id="outlined-multiline-static"
+                            label="Multiline"
+                            multiline
+                            rows={4}
+                            defaultValue=""
+                            value={data?.description}
+                        />
                         <Divider />
                         <Autocomplete
                             multiple
