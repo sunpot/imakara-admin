@@ -4,7 +4,7 @@ import CardContent from '@mui/material/CardContent';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import {StreamerDetailImpl, Tag} from '../models/streamerDetail';
+import {StreamerDetail, Tag} from '../models/streamerDetail';
 import StreamerLinkList from "./StreamerLinkList";
 import Divider from "@mui/material/Divider";
 import {Chip} from "@mui/material";
@@ -12,7 +12,7 @@ import Box from "@mui/material/Box";
 
 
 
-export default function Streamer(props: { item: StreamerDetailImpl; }) {
+export default function Streamer(props: { item: StreamerDetail; }) {
     return (
         <Card sx={{
             p: 1,

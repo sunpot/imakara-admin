@@ -3,8 +3,8 @@ import {Common} from "../../proto/common_connect";
 
 import {Base} from "./Base";
 import {IDatastoreRepository} from "../IDatastoreRepository.ts";
-import {ListStreamerInfoResponse, StreamerDetailResponse} from "../../proto/common_pb";
-import {StreamerDetailImpl} from "../../models/streamerDetail.ts";
+import {ListStreamerInfoResponse, PutStreamerInfoResponse, StreamerDetailResponse} from "../../proto/common_pb";
+import {StreamerDetail, StreamerDetailImpl} from "../../models/streamerDetail.ts";
 
 export class DatastoreRepository extends Base<typeof Common> implements IDatastoreRepository {
     client: PromiseClient<typeof Common>;
@@ -13,6 +13,7 @@ export class DatastoreRepository extends Base<typeof Common> implements IDatasto
         super();
         this.client = this.getClient(Common);
     }
+
 
     listRegistered(): Promise<Array<string>> {
         return new Promise((resolve, reject) => {
@@ -39,6 +40,26 @@ export class DatastoreRepository extends Base<typeof Common> implements IDatasto
                         res.primaryChannel,
                     );
                     resolve(data);
+                })
+                .catch((err: any) => {reject(err)})
+        });
+    }
+
+    putDetail(item: StreamerDetail): Promise<void> {
+
+        return new Promise((resolve, reject) => {
+            this.client
+                .putStreamerInfo(
+                    {
+                        title: item.displayName,
+                        description: "",
+                        avatarUrl: item.thumbnail,
+                        primaryChannel: item.primaryLink.url,
+                    }
+                )
+                .then((res: PutStreamerInfoResponse) => {
+                    alert(res.result);
+                    resolve();
                 })
                 .catch((err: any) => {reject(err)})
         });

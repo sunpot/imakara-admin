@@ -17,6 +17,7 @@ import Divider from "@mui/material/Divider";
 import {useRecoilState} from 'recoil';
 import {streamerListState} from "../state/streamers";
 import {YoutubeInfoRepository} from "../infra/grpc/YoutubeInfo";
+import {DatastoreRepository} from "../infra/grpc/DatastoreRepository.ts";
 
 export default function AddEditFrame() {
     const [open, setOpen] = React.useState(false);
@@ -25,6 +26,7 @@ export default function AddEditFrame() {
     const [data, setData] = React.useState<StreamerDetailImpl|undefined>(undefined);
     const [list, setList] = useRecoilState(streamerListState)
     const repo = new YoutubeInfoRepository();
+    const repoDatastore = new DatastoreRepository();
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -40,7 +42,8 @@ export default function AddEditFrame() {
         setOpen(false);
         setUrl("");
         if (data !== undefined) {
-            setList([...list, data.id]);
+            setList([...list, data]);
+            void repoDatastore.putDetail(data).then();
         }
         setData(undefined);
     };

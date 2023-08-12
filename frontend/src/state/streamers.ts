@@ -1,8 +1,9 @@
 import {atom, selector, RecoilState} from "recoil";
+import {StreamerDetail} from "../models/streamerDetail.ts";
 
-export const streamerListState: RecoilState<string[]> = atom({
+export const streamerListState: RecoilState<StreamerDetail[]> = atom({
     key: "streamerList",
-    default: new Array<string>()
+    default: new Array<StreamerDetail>()
 });
 
 export const streamerListStateSelector = selector({

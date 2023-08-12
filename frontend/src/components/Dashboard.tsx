@@ -18,8 +18,10 @@ import {Container, Grid} from "@mui/material";
 import Streamer from "./Streamer";
 import AddEditFrame from "./AddEditFrame";
 import {DatastoreRepository} from "../infra/grpc/DatastoreRepository.ts";
-import {useEffect, useState} from "react";
-import {StreamerDetailImpl} from "../models/streamerDetail.ts";
+import {useEffect} from "react";
+import {useRecoilState} from "recoil";
+import {StreamerDetail} from "../models/streamerDetail.ts";
+import {streamerListState} from "../state/streamers.ts";
 
 
 const drawerWidth = 240;
@@ -74,7 +76,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 const defaultTheme = createTheme();
 
-const liverList = (data: StreamerDetailImpl[]) => {
+const liverList = (data: StreamerDetail[]) => {
     return data.map(item => {
         return (
             <Grid key={item.id} item xs={12} sm={6} md={4}>
@@ -87,22 +89,21 @@ const liverList = (data: StreamerDetailImpl[]) => {
 export default function Dashboard() {
     const [open, setOpen] = React.useState(true);
     //const ids = useRecoilValue(streamerListStateSelector);
-    const [items, setData] = useState(new Array<StreamerDetailImpl>())
+    const [items, setData] = useRecoilState(streamerListState)
     useEffect(() => {
         const repo = new DatastoreRepository();
 
         async function getData(){
             const ids = await repo.listRegistered();
-            const data = new Array<StreamerDetailImpl>();
-            ids.map(async (id) => {
-                const t = await repo.getDetail(id);
-                data.push(t);
-            })
+            const data = await Promise.all(ids.map(async id => {
+                return repo.getDetail(id);
+            }));
+
             setData(data);
         }
 
         void getData().then();
-    },[])
+    },[setData])
     const toggleDrawer = () => {
         setOpen(!open);
     };
