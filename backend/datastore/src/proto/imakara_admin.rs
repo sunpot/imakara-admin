@@ -53,6 +53,8 @@ pub struct StreamerInfoResponse {
     pub avatar_url: ::prost::alloc::string::String,
     #[prost(string, tag = "4")]
     pub primary_channel: ::prost::alloc::string::String,
+    #[prost(string, tag = "5")]
+    pub description: ::prost::alloc::string::String,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -71,6 +73,8 @@ pub struct StreamerDetailResponse {
     pub avatar_url: ::prost::alloc::string::String,
     #[prost(string, tag = "4")]
     pub primary_channel: ::prost::alloc::string::String,
+    #[prost(string, tag = "5")]
+    pub description: ::prost::alloc::string::String,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]

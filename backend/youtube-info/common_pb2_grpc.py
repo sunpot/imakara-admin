@@ -108,10 +108,10 @@ class CommonStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.GetStreamerInfo = channel.unary_unary(
-                '/imakara_admin.Common/GetStreamerInfo',
-                request_serializer=common__pb2.StreamerInfoRequest.SerializeToString,
-                response_deserializer=common__pb2.StreamerInfoResponse.FromString,
+        self.GetStreamerDetail = channel.unary_unary(
+                '/imakara_admin.Common/GetStreamerDetail',
+                request_serializer=common__pb2.StreamerDetailRequest.SerializeToString,
+                response_deserializer=common__pb2.StreamerDetailResponse.FromString,
                 )
         self.ListStreamerInfo = channel.unary_unary(
                 '/imakara_admin.Common/ListStreamerInfo',
@@ -128,7 +128,7 @@ class CommonStub(object):
 class CommonServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def GetStreamerInfo(self, request, context):
+    def GetStreamerDetail(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -149,10 +149,10 @@ class CommonServicer(object):
 
 def add_CommonServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'GetStreamerInfo': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetStreamerInfo,
-                    request_deserializer=common__pb2.StreamerInfoRequest.FromString,
-                    response_serializer=common__pb2.StreamerInfoResponse.SerializeToString,
+            'GetStreamerDetail': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetStreamerDetail,
+                    request_deserializer=common__pb2.StreamerDetailRequest.FromString,
+                    response_serializer=common__pb2.StreamerDetailResponse.SerializeToString,
             ),
             'ListStreamerInfo': grpc.unary_unary_rpc_method_handler(
                     servicer.ListStreamerInfo,
@@ -175,7 +175,7 @@ class Common(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def GetStreamerInfo(request,
+    def GetStreamerDetail(request,
             target,
             options=(),
             channel_credentials=None,
@@ -185,9 +185,9 @@ class Common(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/imakara_admin.Common/GetStreamerInfo',
-            common__pb2.StreamerInfoRequest.SerializeToString,
-            common__pb2.StreamerInfoResponse.FromString,
+        return grpc.experimental.unary_unary(request, target, '/imakara_admin.Common/GetStreamerDetail',
+            common__pb2.StreamerDetailRequest.SerializeToString,
+            common__pb2.StreamerDetailResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 

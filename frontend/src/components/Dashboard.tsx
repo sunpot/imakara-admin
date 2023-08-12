@@ -102,7 +102,7 @@ export default function Dashboard() {
         }
 
         void getData().then();
-    },[])
+    },[setData])
     const toggleDrawer = () => {
         setOpen(!open);
     };

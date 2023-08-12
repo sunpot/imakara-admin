@@ -7,6 +7,8 @@ services:
       - 9000:9000
     volumes:
       - ./proxy/envoy.yaml:/etc/envoy/envoy.yaml
+    networks:
+      - default
 
   youtube-info:
     build:
@@ -16,6 +18,8 @@ services:
     container_name: youtube-info
     environment:
       - YOUTUBE_INFO_API_KEY=
+    networks:
+      - default
 
   datastore:
     build:
@@ -27,6 +31,9 @@ services:
       - username=root
       - password=example
       - db_address=mongo
+    networks:
+      - db
+      - default
 
 # Use root/example as user/password credentials
   mongo:
@@ -35,6 +42,11 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - ./configdb:/data/configdb
+      - mongoDataStore:/data/db
+    networks:
+      - db
 
   mongo-express:
     image: mongo-express
@@ -45,3 +57,12 @@ services:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: example
       ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+    networks:
+      - db
+
+networks:
+  db:
+    driver: bridge
+volumes:
+  mongoDataStore:
+    driver: local

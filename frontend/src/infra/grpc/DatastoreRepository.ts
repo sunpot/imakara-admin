@@ -32,12 +32,7 @@ export class DatastoreRepository extends Base<typeof Common> implements IDatasto
                     id: id
                 })
                 .then((res: StreamerDetailResponse) => {
-                    const data = new StreamerDetailImpl(
-                        res.id,
-                        res.title,
-                        res.avatarUrl,
-                        res.primaryChannel,
-                    );
+                    const data = new StreamerDetailImpl(res.id, res.title, res.avatarUrl, res.description, res.primaryChannel);
                     resolve(data);
                 })
                 .catch((err: any) => {reject(err)})

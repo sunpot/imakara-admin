@@ -62,16 +62,38 @@ class StreamerInfoRequest(_message.Message):
     def __init__(self, url: _Optional[str] = ...) -> None: ...
 
 class StreamerInfoResponse(_message.Message):
-    __slots__ = ["validation_response", "title", "avatar_url", "primary_channel"]
+    __slots__ = ["validation_response", "title", "avatar_url", "primary_channel", "description"]
     VALIDATION_RESPONSE_FIELD_NUMBER: _ClassVar[int]
     TITLE_FIELD_NUMBER: _ClassVar[int]
     AVATAR_URL_FIELD_NUMBER: _ClassVar[int]
     PRIMARY_CHANNEL_FIELD_NUMBER: _ClassVar[int]
+    DESCRIPTION_FIELD_NUMBER: _ClassVar[int]
     validation_response: ValidationResponse
     title: str
     avatar_url: str
     primary_channel: str
-    def __init__(self, validation_response: _Optional[_Union[ValidationResponse, _Mapping]] = ..., title: _Optional[str] = ..., avatar_url: _Optional[str] = ..., primary_channel: _Optional[str] = ...) -> None: ...
+    description: str
+    def __init__(self, validation_response: _Optional[_Union[ValidationResponse, _Mapping]] = ..., title: _Optional[str] = ..., avatar_url: _Optional[str] = ..., primary_channel: _Optional[str] = ..., description: _Optional[str] = ...) -> None: ...
+
+class StreamerDetailRequest(_message.Message):
+    __slots__ = ["id"]
+    ID_FIELD_NUMBER: _ClassVar[int]
+    id: str
+    def __init__(self, id: _Optional[str] = ...) -> None: ...
+
+class StreamerDetailResponse(_message.Message):
+    __slots__ = ["id", "title", "avatar_url", "primary_channel", "description"]
+    ID_FIELD_NUMBER: _ClassVar[int]
+    TITLE_FIELD_NUMBER: _ClassVar[int]
+    AVATAR_URL_FIELD_NUMBER: _ClassVar[int]
+    PRIMARY_CHANNEL_FIELD_NUMBER: _ClassVar[int]
+    DESCRIPTION_FIELD_NUMBER: _ClassVar[int]
+    id: str
+    title: str
+    avatar_url: str
+    primary_channel: str
+    description: str
+    def __init__(self, id: _Optional[str] = ..., title: _Optional[str] = ..., avatar_url: _Optional[str] = ..., primary_channel: _Optional[str] = ..., description: _Optional[str] = ...) -> None: ...
 
 class ValidationResponse(_message.Message):
     __slots__ = ["result", "reason"]
